@@ -1,0 +1,115 @@
+---
+title: "Resultados"
+author: "Projeto Boto-Cinza"
+output:
+  flexdashboard::flex_dashboard:
+    theme: paper
+    source_code: embed
+    
+---
+
+```{r setup, include=FALSE}
+library(dplyr) 
+library(leaflet)  
+library(sf)
+library(stringr)
+library(htmlwidgets)
+library(htmlTable)
+
+pasta_proj <- rprojroot::find_rstudio_root_file()
+
+arquivo_agua_1 <- paste0(pasta_proj, "/data/Agua_L1.shp")
+arquivo_agua_2 <- paste0(pasta_proj, "/data/Agua_L2.shp")
+arquivo_agua_3 <- paste0(pasta_proj, "/data/Agua_L3.shp")
+arquivo_rotas_1 <- paste0(pasta_proj, "/data/L1_rotas.shp")
+arquivo_rotas_2 <- paste0(pasta_proj, "/data/L2_rotas.shp")
+arquivo_rotas_3 <- paste0(pasta_proj, "/data/L3_rotas.shp")
+# arquivo_agua_4 <- paste0(pasta_proj, "/data/Agua_L3_noite.shp")
+
+agua_1 <- st_read(arquivo_agua_1) %>% st_transform(4326)
+agua_2 <- st_read(arquivo_agua_2) %>% st_transform(4326)
+agua_3 <- st_read(arquivo_agua_3) %>% st_transform(4326)
+rotas_1 <- st_read(arquivo_rotas_1) %>% st_transform(4326) %>% st_simplify(dTolerance = 50)
+rotas_2 <- st_read(arquivo_rotas_2) %>% st_transform(4326) %>% st_simplify(dTolerance = 50)
+rotas_3 <- st_read(arquivo_rotas_3) %>% st_transform(4326) %>% st_simplify(dTolerance = 50)
+
+```
+ 
+### Mapa
+
+```{r map}
+
+content_1 <- paste(sep = "<br/>",
+  "<b>Objetivo 1</b>",
+  "59 Expedições",
+  "3909 km",
+  "3117 L",
+  "315 Horas",
+  "<hr>",
+  "69 Horas com grupos",
+  "333 Grupos",
+  "32816 Fotografias")
+
+content_2 <- paste(sep = "<br/>",
+  "<b>Objetivo 2</b>",
+  "39 Expedições",
+  "2354 km",
+  "1440 L",
+  "197 Horas",
+  "<hr>",
+  "37 Horas com grupos",
+  "159 Grupos",
+  "476 Comportamentos"
+  )
+
+content_3 <- paste(sep = "<br/>",
+  "<b>Objetivo 3</b>",
+  "51 Expedições",
+  "1281 km",
+  "1088 L",
+  "281 Horas",
+  "<hr>",
+  "160 Horas de gravação",
+  "330 Arquivos de áudio",
+  "6130 Assobios"
+  )
+
+leaflet() %>%
+  addProviderTiles("Esri.WorldImagery") %>%
+  addScaleBar(position = "bottomleft") %>%
+  addPolygons(data = agua_1, group = "Área de Estudo 1", weight = 2, color = "green") %>%
+  addPolygons(data = agua_2, group = "Área de Estudo 2", weight = 2, color = "green") %>%
+  addPolygons(data = agua_3, group = "Área de Estudo 3", weight = 2, color = "green") %>%
+  addPolylines(data = rotas_1, group = "Rotas 1", weight = 0.5, color = "black") %>%
+  addPolylines(data = rotas_2, group = "Rotas 2", weight = 0.5, color = "black") %>%
+  addPolylines(data = rotas_3, group = "Rotas 3", weight = 0.5, color = "black") %>%
+  addPopups(-48.020079, -25.056311, content_1, group = "Resultados 1",
+            options = popupOptions(closeButton = FALSE)) %>%
+  addPopups(-47.976391, -25.072871, content_2, group = "Resultados 2",
+            options = popupOptions(closeButton = FALSE)) %>%
+  addPopups(-47.933047, -25.059032, content_3, group = "Resultados 3",
+            options = popupOptions(closeButton = FALSE)) %>%
+  addLayersControl(overlayGroups = c("Área de Estudo 1",
+                                     "Área de Estudo 2",
+                                     "Área de Estudo 3",
+                                     "Rotas 1",
+                                     "Rotas 2",
+                                     "Rotas 3",
+                                     "Resultados 1",
+                                     "Resultados 2",
+                                     "Resultados 3")) %>%
+  hideGroup(c("Área de Estudo 1",
+              "Área de Estudo 2",
+              "Área de Estudo 3",
+              "Rotas 1",
+              "Rotas 2",
+              "Rotas 3",
+              "Resultados 1",
+              "Resultados 2",
+              "Resultados 3")) %>%
+  addMeasure(primaryLengthUnit = "kilometers",
+             primaryAreaUnit = "sqmeters")
+
+
+```
+
