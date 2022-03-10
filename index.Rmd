@@ -48,7 +48,10 @@ content_1 <- paste(sep = "<br/>",
   "<hr>",
   "69 Horas com grupos",
   "333 Grupos",
-  "32816 Fotografias")
+  "32816 Fotografias",
+  "<hr>",
+  "01 - 23/07/2020",
+  "59 - 21/02/2022")
 
 content_2 <- paste(sep = "<br/>",
   "<b>Objetivo 2</b>",
@@ -59,7 +62,10 @@ content_2 <- paste(sep = "<br/>",
   "<hr>",
   "37 Horas com grupos",
   "159 Grupos",
-  "476 Comportamentos"
+  "476 Comportamentos",
+  "<hr>",
+  "01 - 27/07/2020",
+  "39 - 21/02/2022"
   )
 
 content_3 <- paste(sep = "<br/>",
@@ -71,7 +77,10 @@ content_3 <- paste(sep = "<br/>",
   "<hr>",
   "160 Horas de gravação",
   "330 Arquivos de áudio",
-  "6130 Assobios"
+  "6130 Assobios",
+  "<hr>",
+  "01 - 04/08/2020",
+  "51 - 07/03/2022"
   )
 
 leaflet() %>%
