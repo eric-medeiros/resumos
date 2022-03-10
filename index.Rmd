@@ -24,7 +24,6 @@ arquivo_agua_3 <- paste0(pasta_proj, "/data/Agua_L3.shp")
 arquivo_rotas_1 <- paste0(pasta_proj, "/data/L1_rotas.shp")
 arquivo_rotas_2 <- paste0(pasta_proj, "/data/L2_rotas.shp")
 arquivo_rotas_3 <- paste0(pasta_proj, "/data/L3_rotas.shp")
-# arquivo_agua_4 <- paste0(pasta_proj, "/data/Agua_L3_noite.shp")
 
 agua_1 <- st_read(arquivo_agua_1) %>% st_transform(4326)
 agua_2 <- st_read(arquivo_agua_2) %>% st_transform(4326)
