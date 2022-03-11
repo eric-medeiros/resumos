@@ -1,5 +1,5 @@
 ---
-title: "Resultados"
+title: "Resumos do Esforço Amostral"
 author: "Projeto Boto-Cinza"
 output:
   flexdashboard::flex_dashboard:
@@ -45,8 +45,8 @@ content_1 <- paste(sep = "<br/>",
   "3117 L",
   "315 Horas",
   "<hr>",
-  "69 Horas com grupos",
-  "333 Grupos",
+  "69    Horas com grupos",
+  "333   Grupos",
   "32816 Fotografias",
   "<hr>",
   "01 - 23/07/2020",
@@ -59,9 +59,9 @@ content_2 <- paste(sep = "<br/>",
   "1440 L",
   "197 Horas",
   "<hr>",
-  "37 Horas com grupos",
+  "37  Horas com grupos",
   "159 Grupos",
-  "476 Comportamentos",
+  "476 Eventos",
   "<hr>",
   "01 - 27/07/2020",
   "39 - 21/02/2022"
@@ -74,8 +74,8 @@ content_3 <- paste(sep = "<br/>",
   "1088 L",
   "281 Horas",
   "<hr>",
-  "160 Horas de gravação",
-  "330 Arquivos de áudio",
+  "160  Horas de gravação",
+  "330  Arquivos de áudio",
   "6130 Assobios",
   "<hr>",
   "01 - 04/08/2020",
@@ -83,38 +83,35 @@ content_3 <- paste(sep = "<br/>",
   )
 
 leaflet() %>%
-  addProviderTiles("Esri.WorldImagery") %>%
+  addProviderTiles("Stamen.TonerLite", group = "Mapa") %>%
+  addProviderTiles("Esri.WorldImagery", group = "Satélite") %>%
   addScaleBar(position = "bottomleft") %>%
-  addPolygons(data = agua_1, group = "Área de Estudo 1", weight = 2, color = "green") %>%
-  addPolygons(data = agua_2, group = "Área de Estudo 2", weight = 2, color = "green") %>%
-  addPolygons(data = agua_3, group = "Área de Estudo 3", weight = 2, color = "green") %>%
-  addPolylines(data = rotas_1, group = "Rotas 1", weight = 0.5, color = "black") %>%
-  addPolylines(data = rotas_2, group = "Rotas 2", weight = 0.5, color = "black") %>%
-  addPolylines(data = rotas_3, group = "Rotas 3", weight = 0.5, color = "black") %>%
-  addPopups(-48.020079, -25.056311, content_1, group = "Resultados 1",
+  addPolygons(data = agua_1, group = "Resumo 1", weight = 2, color = "blue") %>%
+  addPolygons(data = agua_2, group = "Resumo 2", weight = 2, color = "blue") %>%
+  addPolygons(data = agua_3, group = "Resumo 3", weight = 2, color = "blue") %>%
+  addPolylines(data = rotas_1, group = "Resumo 1", weight = 0.5, color = "black") %>%
+  addPolylines(data = rotas_2, group = "Resumo 2", weight = 0.5, color = "black") %>%
+  addPolylines(data = rotas_3, group = "Resumo 3", weight = 0.5, color = "black") %>%
+  addPopups(-48.022023, -25.027921,
+            content_1,
+            group = "Resumo 1",
             options = popupOptions(closeButton = FALSE)) %>%
-  addPopups(-47.976391, -25.072871, content_2, group = "Resultados 2",
+  addPopups(-48.022023, -25.027921,
+            content_2,
+            group = "Resumo 2",
             options = popupOptions(closeButton = FALSE)) %>%
-  addPopups(-47.933047, -25.059032, content_3, group = "Resultados 3",
+  addPopups(-47.906719, -24.997465,
+            content_3,
+            group = "Resumo 3",
             options = popupOptions(closeButton = FALSE)) %>%
-  addLayersControl(overlayGroups = c("Área de Estudo 1",
-                                     "Área de Estudo 2",
-                                     "Área de Estudo 3",
-                                     "Rotas 1",
-                                     "Rotas 2",
-                                     "Rotas 3",
-                                     "Resultados 1",
-                                     "Resultados 2",
-                                     "Resultados 3")) %>%
-  hideGroup(c("Área de Estudo 1",
-              "Área de Estudo 2",
-              "Área de Estudo 3",
-              "Rotas 1",
-              "Rotas 2",
-              "Rotas 3",
-              "Resultados 1",
-              "Resultados 2",
-              "Resultados 3")) %>%
+  addLayersControl(baseGroups = c("Mapa",
+                                  "Satélite"),
+                   overlayGroups = c("Resumo 1",
+                                     "Resumo 2",
+                                     "Resumo 3")) %>%
+  hideGroup(c("Resumo 1",
+              "Resumo 2",
+              "Resumo 3")) %>%
   addMeasure(primaryLengthUnit = "kilometers",
              primaryAreaUnit = "sqmeters")
 
